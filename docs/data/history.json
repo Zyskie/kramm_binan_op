@@ -202,5 +202,107 @@
     "long_signal": false,
     "short_signal": false,
     "timestamp": "2026-08-29T20:59:08.166244Z"
+  },
+  {
+    "symbol": "BTCUSDT",
+    "price": 78063.0,
+    "high": 78098.8,
+    "low": 78063.0,
+    "atr": 285.18777299041824,
+    "rsi": 51.866914453761126,
+    "funding_rate": 6.594e-05,
+    "long_checks": {
+      "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
+      "Tendencia 4h confirma alcista (EMA50>EMA200)": true,
+      "MACD alcista (linea>se\u00f1al, histograma>0)": true,
+      "RSI en zona sana (40-68)": true,
+      "ADX>25 con +DI>-DI (tendencia fuerte)": false,
+      "Volumen > 1.2x promedio 20": false,
+      "Precio sobre banda media (BB20)": true,
+      "Funding rate no sobrecalentado (<0.03%)": true,
+      "Open Interest confirma (sube junto al precio, 24h)": false
+    },
+    "short_checks": {
+      "Tendencia 1h (EMA50<EMA200 y precio bajo EMA50)": false,
+      "Tendencia 4h confirma bajista (EMA50<EMA200)": false,
+      "MACD bajista (linea<se\u00f1al, histograma<0)": false,
+      "RSI en zona sana (32-60)": true,
+      "ADX>25 con -DI>+DI (tendencia fuerte)": false,
+      "Volumen > 1.2x promedio 20": false,
+      "Precio bajo banda media (BB20)": false,
+      "Funding rate no sobre-negativo (>-0.03%)": true,
+      "Open Interest confirma (sube con precio cayendo, 24h)": false
+    },
+    "long_signal": false,
+    "short_signal": false,
+    "timestamp": "2026-08-29T21:00:44.929903Z"
+  },
+  {
+    "symbol": "ETHUSDT",
+    "price": 2450.0,
+    "high": 2451.46,
+    "low": 2450.0,
+    "atr": 10.98301100961069,
+    "rsi": 51.42914604894027,
+    "funding_rate": 4.579e-05,
+    "long_checks": {
+      "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
+      "Tendencia 4h confirma alcista (EMA50>EMA200)": true,
+      "MACD alcista (linea>se\u00f1al, histograma>0)": true,
+      "RSI en zona sana (40-68)": true,
+      "ADX>25 con +DI>-DI (tendencia fuerte)": false,
+      "Volumen > 1.2x promedio 20": false,
+      "Precio sobre banda media (BB20)": true,
+      "Funding rate no sobrecalentado (<0.03%)": true,
+      "Open Interest confirma (sube junto al precio, 24h)": true
+    },
+    "short_checks": {
+      "Tendencia 1h (EMA50<EMA200 y precio bajo EMA50)": false,
+      "Tendencia 4h confirma bajista (EMA50<EMA200)": false,
+      "MACD bajista (linea<se\u00f1al, histograma<0)": false,
+      "RSI en zona sana (32-60)": true,
+      "ADX>25 con -DI>+DI (tendencia fuerte)": false,
+      "Volumen > 1.2x promedio 20": false,
+      "Precio bajo banda media (BB20)": false,
+      "Funding rate no sobre-negativo (>-0.03%)": true,
+      "Open Interest confirma (sube con precio cayendo, 24h)": false
+    },
+    "long_signal": false,
+    "short_signal": false,
+    "timestamp": "2026-08-29T21:00:46.567614Z"
+  },
+  {
+    "symbol": "BNBUSDT",
+    "price": 692.2,
+    "high": 692.6,
+    "low": 692.2,
+    "atr": 2.3525343660350475,
+    "rsi": 50.63234242096711,
+    "funding_rate": -1.64e-06,
+    "long_checks": {
+      "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
+      "Tendencia 4h confirma alcista (EMA50>EMA200)": true,
+      "MACD alcista (linea>se\u00f1al, histograma>0)": true,
+      "RSI en zona sana (40-68)": true,
+      "ADX>25 con +DI>-DI (tendencia fuerte)": false,
+      "Volumen > 1.2x promedio 20": false,
+      "Precio sobre banda media (BB20)": true,
+      "Funding rate no sobrecalentado (<0.03%)": true,
+      "Open Interest confirma (sube junto al precio, 24h)": false
+    },
+    "short_checks": {
+      "Tendencia 1h (EMA50<EMA200 y precio bajo EMA50)": false,
+      "Tendencia 4h confirma bajista (EMA50<EMA200)": false,
+      "MACD bajista (linea<se\u00f1al, histograma<0)": false,
+      "RSI en zona sana (32-60)": true,
+      "ADX>25 con -DI>+DI (tendencia fuerte)": true,
+      "Volumen > 1.2x promedio 20": false,
+      "Precio bajo banda media (BB20)": false,
+      "Funding rate no sobre-negativo (>-0.03%)": true,
+      "Open Interest confirma (sube con precio cayendo, 24h)": false
+    },
+    "long_signal": false,
+    "short_signal": false,
+    "timestamp": "2026-08-29T21:00:50.121602Z"
   }
 ]

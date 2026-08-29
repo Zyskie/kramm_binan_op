@@ -1,20 +1,20 @@
 {
-  "generated_at": "2026-08-29T20:59:08.170241Z",
+  "generated_at": "2026-08-29T21:00:50.124600Z",
   "symbols": {
     "BTCUSDT": {
       "symbol": "BTCUSDT",
-      "price": 78087.8,
-      "high": 78267.4,
-      "low": 78069.9,
-      "atr": 304.3714478358348,
-      "rsi": 52.67302195762098,
+      "price": 78063.0,
+      "high": 78098.8,
+      "low": 78063.0,
+      "atr": 285.18777299041824,
+      "rsi": 51.866914453761126,
       "funding_rate": 6.594e-05,
       "long_checks": {
         "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
         "Tendencia 4h confirma alcista (EMA50>EMA200)": true,
         "MACD alcista (linea>se\u00f1al, histograma>0)": true,
         "RSI en zona sana (40-68)": true,
-        "ADX>25 con +DI>-DI (tendencia fuerte)": true,
+        "ADX>25 con +DI>-DI (tendencia fuerte)": false,
         "Volumen > 1.2x promedio 20": false,
         "Precio sobre banda media (BB20)": true,
         "Funding rate no sobrecalentado (<0.03%)": true,
@@ -33,22 +33,22 @@
       },
       "long_signal": false,
       "short_signal": false,
-      "timestamp": "2026-08-29T20:59:04.818922Z"
+      "timestamp": "2026-08-29T21:00:44.929903Z"
     },
     "ETHUSDT": {
       "symbol": "ETHUSDT",
-      "price": 2451.56,
-      "high": 2457.41,
-      "low": 2450.42,
-      "atr": 11.715550318042279,
-      "rsi": 52.90089141447029,
+      "price": 2450.0,
+      "high": 2451.46,
+      "low": 2450.0,
+      "atr": 10.98301100961069,
+      "rsi": 51.42914604894027,
       "funding_rate": 4.579e-05,
       "long_checks": {
         "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
         "Tendencia 4h confirma alcista (EMA50>EMA200)": true,
         "MACD alcista (linea>se\u00f1al, histograma>0)": true,
         "RSI en zona sana (40-68)": true,
-        "ADX>25 con +DI>-DI (tendencia fuerte)": true,
+        "ADX>25 con +DI>-DI (tendencia fuerte)": false,
         "Volumen > 1.2x promedio 20": false,
         "Precio sobre banda media (BB20)": true,
         "Funding rate no sobrecalentado (<0.03%)": true,
@@ -67,15 +67,15 @@
       },
       "long_signal": false,
       "short_signal": false,
-      "timestamp": "2026-08-29T20:59:06.507989Z"
+      "timestamp": "2026-08-29T21:00:46.567614Z"
     },
     "BNBUSDT": {
       "symbol": "BNBUSDT",
-      "price": 692.3,
-      "high": 693.4,
-      "low": 691.8,
-      "atr": 2.5027293172685146,
-      "rsi": 50.961051955210344,
+      "price": 692.2,
+      "high": 692.6,
+      "low": 692.2,
+      "atr": 2.3525343660350475,
+      "rsi": 50.63234242096711,
       "funding_rate": -1.64e-06,
       "long_checks": {
         "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
@@ -101,7 +101,7 @@
       },
       "long_signal": false,
       "short_signal": false,
-      "timestamp": "2026-08-29T20:59:08.166244Z"
+      "timestamp": "2026-08-29T21:00:50.121602Z"
     }
   },
   "open_positions": {}
