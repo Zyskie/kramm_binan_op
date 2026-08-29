@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-29T21:00:50.124600Z",
+  "generated_at": "2026-08-29T21:05:07.724944Z",
   "symbols": {
     "BTCUSDT": {
       "symbol": "BTCUSDT",
-      "price": 78063.0,
+      "price": 78029.9,
       "high": 78098.8,
-      "low": 78063.0,
-      "atr": 285.18777299041824,
-      "rsi": 51.866914453761126,
+      "low": 78011.5,
+      "atr": 288.8663444189896,
+      "rsi": 50.82869303505245,
       "funding_rate": 6.594e-05,
       "long_checks": {
         "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
@@ -33,15 +33,15 @@
       },
       "long_signal": false,
       "short_signal": false,
-      "timestamp": "2026-08-29T21:00:44.929903Z"
+      "timestamp": "2026-08-29T21:05:04.394593Z"
     },
     "ETHUSDT": {
       "symbol": "ETHUSDT",
-      "price": 2450.0,
+      "price": 2448.43,
       "high": 2451.46,
-      "low": 2450.0,
-      "atr": 10.98301100961069,
-      "rsi": 51.42914604894027,
+      "low": 2447.81,
+      "atr": 11.139439581039266,
+      "rsi": 50.021497182918644,
       "funding_rate": 4.579e-05,
       "long_checks": {
         "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
@@ -67,15 +67,15 @@
       },
       "long_signal": false,
       "short_signal": false,
-      "timestamp": "2026-08-29T21:00:46.567614Z"
+      "timestamp": "2026-08-29T21:05:06.039551Z"
     },
     "BNBUSDT": {
       "symbol": "BNBUSDT",
-      "price": 692.2,
+      "price": 692.0,
       "high": 692.6,
-      "low": 692.2,
-      "atr": 2.3525343660350475,
-      "rsi": 50.63234242096711,
+      "low": 692.0,
+      "atr": 2.366820080320765,
+      "rsi": 49.98748280522152,
       "funding_rate": -1.64e-06,
       "long_checks": {
         "Tendencia 1h (EMA50>EMA200 y precio sobre EMA50)": false,
@@ -101,7 +101,7 @@
       },
       "long_signal": false,
       "short_signal": false,
-      "timestamp": "2026-08-29T21:00:50.121602Z"
+      "timestamp": "2026-08-29T21:05:07.722941Z"
     }
   },
   "open_positions": {}
