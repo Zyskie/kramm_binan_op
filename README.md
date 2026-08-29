@@ -13,13 +13,21 @@ probabilidad a favor (edge), no eliminar el riesgo.
 
 ## Cómo funciona
 
-Un routine programado (cada 1h) corre `scripts/evaluate.py`, que:
+El Programador de tareas de Windows corre `scripts/run_local.ps1` cada hora
+(a los :05). Ese script hace `git pull`, corre `scripts/evaluate.py`, manda por
+Gmail SMTP los mails encolados y hace `commit` + `push` de `docs/`.
+
+Corre local y no en un routine cloud porque las IPs de salida del cloud de
+Anthropic están geo-bloqueadas por Binance **y** Bybit (HTTP 451 / 403). Esta
+máquina (Uruguay) llega sin problema. La routine `kramm-binance-hourly` quedó
+creada pero deshabilitada.
+
+`scripts/evaluate.py`:
 
 1. Trae velas 1h y 4h de Bybit (perpetuos USD-M, `api.bybit.com/v5/market/*`,
    endpoints públicos, sin API key) para `BTCUSDT`, `ETHUSDT`, `BNBUSDT`.
-   Se usa Bybit y no Binance porque la API pública de Binance Futures
-   (`fapi.binance.com`) devuelve HTTP 451 a las IPs del entorno cloud; los
-   precios e indicadores de estos majors son casi idénticos entre ambos.
+   Se usa Bybit y no Binance por comodidad; los precios e indicadores de estos
+   majors son casi idénticos entre ambos.
 2. Calcula: EMA50/EMA200 (1h y 4h), MACD, RSI14, ADX14 (+DI/-DI), ATR14,
    Bandas de Bollinger(20,2), volumen vs. promedio 20, funding rate y
    Open Interest (24h).
@@ -31,11 +39,12 @@ Un routine programado (cada 1h) corre `scripts/evaluate.py`, que:
 5. Si hay una posición simulada abierta, chequea si la vela tocó SL o TP; si
    es así, la cierra, registra el resultado en `docs/data/trades.json` y
    encola un mail de cierre.
-6. Escribe todo en `docs/data/*.json`.
+6. Escribe todo en `docs/data/*.json`. `evaluate.py` **no** manda mails ni toca
+   git; sólo calcula y persiste JSON.
 
-El agente que corre el routine (no el script Python) lee
-`docs/data/pending_emails.json` después de ejecutar el script, envía esos
-mails por Gmail, y hace commit + push de los cambios en `docs/`.
+`run_local.ps1` lee `docs/data/pending_emails.json` después de correr el script,
+manda esos mails por `smtp.gmail.com` (usa un app password de Gmail en la
+variable de entorno `KRAMM_GMAIL_APP_PW`), vacía la cola y hace commit + push.
 
 ## Dashboard
 
@@ -52,6 +61,7 @@ scripts/
   market_api.py      # cliente HTTP a Bybit v5 market data (stdlib only)
   indicators.py       # EMA, MACD, RSI, ADX, ATR, Bollinger (stdlib only)
   evaluate.py          # orquestador: fetch + indicadores + paper trading + persistencia
+  run_local.ps1        # runner horario: pull + evaluate.py + mails + commit/push
 docs/
   index.html           # dashboard estático (GitHub Pages)
   data/
