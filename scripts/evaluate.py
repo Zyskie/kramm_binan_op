@@ -46,7 +46,23 @@ def save_json(name, obj):
 
 
 def now_iso():
-    return datetime.datetime.utcnow().isoformat() + "Z"
+    return datetime.datetime.now(datetime.timezone.utc).replace(tzinfo=None).isoformat() + "Z"
+
+
+def iso_to_ms(iso):
+    """Parse an ISO timestamp (optionally trailing 'Z') to epoch milliseconds."""
+    s = iso[:-1] if iso.endswith("Z") else iso
+    dt = datetime.datetime.fromisoformat(s)
+    return int(dt.replace(tzinfo=datetime.timezone.utc).timestamp() * 1000)
+
+
+def ms_to_iso(ms):
+    return (
+        datetime.datetime.fromtimestamp(ms / 1000, datetime.timezone.utc)
+        .replace(tzinfo=None)
+        .isoformat()
+        + "Z"
+    )
 
 
 def analyze_symbol(symbol):
@@ -124,7 +140,7 @@ def analyze_symbol(symbol):
         "Open Interest confirma (sube con precio cayendo, 24h)": bool(oi_rising and price_falling),
     }
 
-    return {
+    analysis = {
         "symbol": symbol,
         "price": last_close,
         "high": last_high,
@@ -138,21 +154,42 @@ def analyze_symbol(symbol):
         "short_signal": all(short_checks.values()),
         "timestamp": now_iso(),
     }
+    # Raw 1h OHLC is returned separately (not persisted) so position management
+    # can scan every candle since a position was opened, not just the last one.
+    candles = [
+        {"open_time": c["open_time"], "high": c["high"], "low": c["low"], "close_time": c["close_time"]}
+        for c in k1h
+    ]
+    return analysis, candles
 
 
-def manage_position(symbol, analysis, positions, trades, pending_emails):
+def manage_position(symbol, analysis, candles, positions, trades, pending_emails):
     pos = positions.get(symbol)
     if pos:
-        if pos["direction"] == "LONG":
-            hit_sl = analysis["low"] <= pos["sl"]
-            hit_tp = analysis["high"] >= pos["tp"]
-        else:
-            hit_sl = analysis["high"] >= pos["sl"]
-            hit_tp = analysis["low"] <= pos["tp"]
-        if hit_sl or hit_tp:
-            # conservative: if both touched in the same candle, assume SL first
-            outcome = "SL" if hit_sl else "TP"
-            exit_price = pos["sl"] if hit_sl else pos["tp"]
+        # Scan every candle whose range overlaps the holding period (candle still
+        # open at, or opened after, entry time), in chronological order. The first
+        # candle to touch SL or TP closes the position -- if one candle touches
+        # both, conservatively assume SL was hit first.
+        opened_ms = iso_to_ms(pos["opened_at"])
+        outcome = None
+        exit_price = None
+        exit_time = analysis["timestamp"]
+        for c in candles:
+            if c["close_time"] < opened_ms:
+                continue
+            if pos["direction"] == "LONG":
+                c_sl = c["low"] <= pos["sl"]
+                c_tp = c["high"] >= pos["tp"]
+            else:
+                c_sl = c["high"] >= pos["sl"]
+                c_tp = c["low"] <= pos["tp"]
+            if c_sl or c_tp:
+                outcome = "SL" if c_sl else "TP"
+                exit_price = pos["sl"] if c_sl else pos["tp"]
+                now_ms = iso_to_ms(analysis["timestamp"])
+                exit_time = ms_to_iso(min(c["close_time"], now_ms))
+                break
+        if outcome:
             pnl_pct = (
                 (exit_price - pos["entry"]) / pos["entry"]
                 if pos["direction"] == "LONG"
@@ -161,7 +198,7 @@ def manage_position(symbol, analysis, positions, trades, pending_emails):
             trade = dict(pos)
             trade.update(
                 exit=exit_price,
-                exit_time=analysis["timestamp"],
+                exit_time=exit_time,
                 outcome=outcome,
                 pnl_pct=round(pnl_pct * 100, 3),
             )
@@ -177,7 +214,7 @@ def manage_position(symbol, analysis, positions, trades, pending_emails):
                         f"Resultado: {trade['pnl_pct']}%\n"
                         f"Motivo: {'Take Profit alcanzado' if outcome == 'TP' else 'Stop Loss alcanzado'}\n"
                         f"Abierta: {pos['opened_at']}\n"
-                        f"Cerrada: {analysis['timestamp']}\n"
+                        f"Cerrada: {exit_time}\n"
                     ),
                 }
             )
@@ -223,8 +260,8 @@ def main():
     latest = {}
 
     for symbol in SYMBOLS:
-        analysis = analyze_symbol(symbol)
-        manage_position(symbol, analysis, positions, trades, pending_emails)
+        analysis, candles = analyze_symbol(symbol)
+        manage_position(symbol, analysis, candles, positions, trades, pending_emails)
         latest[symbol] = analysis
         history.append(analysis)
 
