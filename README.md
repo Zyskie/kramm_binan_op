@@ -1,6 +1,6 @@
-# Kramm Binance Monitor
+# Kramm Bybit Monitor
 
-Monitoreo horario de BTC, ETH y BNB (Binance USD-M Futures) con un checklist de
+Monitoreo horario de BTC, ETH y BNB (perpetuos USD-M) con un checklist de
 9 indicadores técnicos por dirección (LONG / SHORT). Cuando **todos** los
 indicadores de una dirección se cumplen, se registra una operación **simulada**
 (paper trade) y se envía un mail de aviso. Cuando esa posición simulada toca su
@@ -15,8 +15,11 @@ probabilidad a favor (edge), no eliminar el riesgo.
 
 Un routine programado (cada 1h) corre `scripts/evaluate.py`, que:
 
-1. Trae velas 1h y 4h de Binance Futures (`fapi.binance.com`, endpoints públicos,
-   sin API key) para `BTCUSDT`, `ETHUSDT`, `BNBUSDT`.
+1. Trae velas 1h y 4h de Bybit (perpetuos USD-M, `api.bybit.com/v5/market/*`,
+   endpoints públicos, sin API key) para `BTCUSDT`, `ETHUSDT`, `BNBUSDT`.
+   Se usa Bybit y no Binance porque la API pública de Binance Futures
+   (`fapi.binance.com`) devuelve HTTP 451 a las IPs del entorno cloud; los
+   precios e indicadores de estos majors son casi idénticos entre ambos.
 2. Calcula: EMA50/EMA200 (1h y 4h), MACD, RSI14, ADX14 (+DI/-DI), ATR14,
    Bandas de Bollinger(20,2), volumen vs. promedio 20, funding rate y
    Open Interest (24h).
@@ -46,7 +49,7 @@ con win rate y PnL acumulado.
 
 ```
 scripts/
-  binance_api.py     # cliente HTTP a Binance Futures (stdlib only)
+  market_api.py      # cliente HTTP a Bybit v5 market data (stdlib only)
   indicators.py       # EMA, MACD, RSI, ADX, ATR, Bollinger (stdlib only)
   evaluate.py          # orquestador: fetch + indicadores + paper trading + persistencia
 docs/
@@ -61,7 +64,6 @@ docs/
 
 ## Próximos pasos (fuera de esta iteración)
 
-- Conectar ejecución real de órdenes en Binance Futures (API key con permisos
-  de trading) cuando se valide el criterio con suficientes operaciones
-  simuladas.
+- Conectar ejecución real de órdenes (API key con permisos de trading) cuando
+  se valide el criterio con suficientes operaciones simuladas.
 - Ajustar umbrales de los indicadores según el resultado del historial.

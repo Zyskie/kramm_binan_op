@@ -1,6 +1,6 @@
 """Hourly evaluation entrypoint.
 
-Fetches Binance USD-M Futures data for BTC/ETH/BNB, computes a 9-indicator
+Fetches Bybit USD-M perpetual data for BTC/ETH/BNB, computes a 9-indicator
 confluence checklist for LONG and SHORT, manages simulated (paper) positions,
 and persists everything under docs/data/ so the static dashboard (docs/index.html)
 and the GitHub-hosted history can read it.
@@ -20,7 +20,7 @@ import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
-from binance_api import get_klines, get_funding_rate, get_open_interest_hist
+from market_api import get_klines, get_funding_rate, get_open_interest_hist
 from indicators import ema_last, rsi, macd, atr, adx, bollinger, sma
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "docs", "data")
