@@ -1,0 +1,20 @@
+name: Hourly evaluate (Vercel)
+
+# Replaces cron-job.org / the old local Windows Task Scheduler runner.
+# Vercel Cron Jobs on the Hobby plan only fire once a day, so this workflow
+# is what actually triggers the hourly checklist run against Bybit.
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch: {}
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call /api/evaluate
+        run: |
+          curl --fail-with-body --silent --show-error \
+            "https://web-eta-pink-76.vercel.app/api/evaluate?secret=${KRAMM_CRON_SECRET}"
+        env:
+          KRAMM_CRON_SECRET: ${{ secrets.KRAMM_CRON_SECRET }}
