@@ -65,15 +65,24 @@ web/
 
 ## Scheduler externo (para que corra cada hora, gratis)
 
-En [cron-job.org](https://cron-job.org) (u otro servicio de cron gratuito)
-crear una tarea que cada hora haga:
+`../.github/workflows/hourly-evaluate.yml` ya hace esto: cada hora (minuto
+`0`, UTC) le pega un `GET` a `/api/evaluate?secret=...` vía GitHub Actions,
+gratis, versionado junto con el resto del repo -- no depende de una cuenta
+de terceros como cron-job.org. Solo falta:
 
-```
-GET https://<tu-proyecto>.vercel.app/api/evaluate?secret=<CRON_SECRET>
-```
+1. Editar la URL del workflow si el dominio de producción cambia (por
+   defecto apunta a `https://web-eta-pink-76.vercel.app`).
+2. Cargar el secreto en el repo: **Settings → Secrets and variables →
+   Actions → New repository secret**, nombre `KRAMM_CRON_SECRET`, mismo
+   valor que `CRON_SECRET` en Vercel.
 
-(o mandar el mismo secreto como header `Authorization: Bearer <CRON_SECRET>`).
-Sin el secreto correcto, el endpoint devuelve `401`.
+Se puede disparar a mano desde la pestaña **Actions** del repo ("Run
+workflow") para probar sin esperar a la próxima hora en punto. Sin el
+secreto correcto, `/api/evaluate` devuelve `401`.
+
+Alternativa si preferís no depender de GitHub Actions: cualquier servicio de
+cron externo (ej. [cron-job.org](https://cron-job.org)) pegándole a la misma
+URL cada hora funciona igual.
 
 ## Desarrollo local
 
